@@ -228,8 +228,8 @@ are not).
 5.  Press Enter. You will follow the text-only prompts. To move through
     the text, press Spacebar. Type `yes` and press enter to approve the
     license. Press Enter to approve the default location for the files.
-    Type `yes` and press Enter to prepend Anaconda to your `PATH` (this
-    makes the Anaconda distribution the default Python).
+    Type `yes`. The installer prompts “Do you wish the installer to initialize Anaconda3 by running `conda init`?”. 
+    Type `yes`.
 6.  Close the terminal window.
 
 ### Installing packages in Python
