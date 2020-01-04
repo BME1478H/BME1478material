@@ -22,10 +22,10 @@ Week 12. Artificial neural networks continued
 Each week will include a set of associated exercises, each set worth 6% of the total course grade. A final assignment will also be required, worth 28% of the total grade.
 
 ## Grading
- 90% -----at least an A-
- 80% -----at least an B-
- 70% -----at least an C-
- 60% -----at least an D-
+90% -----at least an A-
+80% -----at least an B-
+70% -----at least an C-
+60% -----at least an D-
 
 Late assignments will be accepted but docked 20% for each day late.
 
