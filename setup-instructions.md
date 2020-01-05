@@ -132,19 +132,24 @@ When you\'re writing code, it\'s nice to have a text editor that is
 optimized for writing code, with features like automatic color-coding of
 key words. The default text editor on macOS and Linux is usually set to
 Vim, which is not famous for being intuitive. If you accidentally find
-yourself stuck in it, hit the Esc key, followed by :+Q+! (colon,
+yourself stuck in it, hit the Esc key, followed by `:` + `q` + `!` (colon,
 lower-case \'q\', exclamation mark), then hitting Return to return to
 the shell.
 
 ### Windows
 `nano` is a basic editor and the default that instructors use in the
-workshop. It is installed along with Git.
+workshop, but for Windows, you can install either [Notepad++](https://notepad-plus-plus.org/downloads/) or [Atom](https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-windows) for windows. 
 
-Others editors that you can use are
-[Notepad++](https://notepad-plus-plus.org/) or [Sublime
-Text](https://www.sublimetext.com/). **Be aware that you must add its
-installation directory to your system path.** Please ask your instructor
-to help you do this.
+Then you have to set your default editor in Git to use the editor that you installed in Git Bash. 
+
+To set notepad++ as default:
+
+`git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"`
+
+To set Atom as default:   
+`git config --global core.editor "atom --wait"`
+
+If you're having trouble, please ask your instructor/TAs for help.
 
 ### Mac OS
 `nano` is a basic editor and the default that instructors use in the
@@ -152,9 +157,10 @@ workshop. See the Git installation [video
 tutorial](https://www.youtube.com/watch?v=9LQhwETCdwY%20) for an example
 on how to open nano. It should be pre-installed.
 
-Others editors that you can use are
-[BBEdit](https://www.barebones.com/products/bbedit/) or [Sublime
-Text](https://www.sublimetext.com/).
+Others editors that you can use:
+- the default `TextEdit` on Mac (`open -e` from the command line), 
+- [BBEdit](https://www.barebones.com/products/bbedit/)
+- [Sublime Text](https://www.sublimetext.com/).
 
 ### Linux 
 `nano` is a basic editor and the default that instructors use in the
@@ -228,7 +234,7 @@ are not).
 5.  Press Enter. You will follow the text-only prompts. To move through
     the text, press Spacebar. Type `yes` and press enter to approve the
     license. Press Enter to approve the default location for the files.
-    Type `yes`. The installer prompts “Do you wish the installer to initialize Anaconda3 by running `conda init`?”. 
+    The installer prompts “Do you wish the installer to initialize Anaconda3 by running `conda init`?”. 
     Type `yes`.
 6.  Close the terminal window.
 
