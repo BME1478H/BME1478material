@@ -25,3 +25,6 @@ Repeat the script, and make a second column for documenting if the folder includ
 ## 3
 Rename all the note text files to this template:
 notes-name of the folder, e.g. notes-20190912-0.txt
+## 4
+Over the course of a few months, she copied her experiment data on an external hard drive.
+She wants to do a final check that there is in fact a copy of all the folders in the hard drive. Help her compare the list of all the folders across the main computer and the hard drive.
