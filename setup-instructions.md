@@ -1,6 +1,7 @@
 # Getting Your Computer Ready for BME1478H 
 
 To code along during lessons and tutorials, or to complete assignments, you will need to set up your laptop/computer with the following software, and an up-to-date web browser.
+
 1. Install Bash Shell
 2. Install Git + Make a GitHub Account
 3. Text Editor
