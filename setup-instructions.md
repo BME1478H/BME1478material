@@ -1,6 +1,7 @@
 # Getting Your Computer Ready for BME1478H 
 
 To code along during lessons and tutorials, or to complete assignments, you will need to set up your laptop/computer with the following software, and an up-to-date web browser.
+
 1. Install Bash Shell
 2. Install Git + Make a GitHub Account
 3. Text Editor
@@ -136,41 +137,35 @@ yourself stuck in it, hit the Esc key, followed by `:` + `q` + `!` (colon,
 lower-case \'q\', exclamation mark), then hitting Return to return to
 the shell.
 
+However, for the course, we will be using Atom Text Editor. If you are already comfortable using another text editor (Vim, Nano, Sublime), feel free to use this text editor. 
+
+If you'd like to follow along using Atom, follow the OS specific instructions below to install it on your computer.
+
+If you're having trouble, please ask your instructor/TAs for help.
+
 ### Windows
-`nano` is a basic editor and the default that instructors use in the
-workshop, but for Windows, you can install either [Notepad++](https://notepad-plus-plus.org/downloads/) or [Atom](https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-windows) for windows. 
+Install [Atom](https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-windows) for Windows. 
 
-Then you have to set your default editor in Git to use the editor that you installed in Git Bash. 
-
-To set notepad++ as default:
-
-`git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"`
+Git Bash uses Vim as an editor so you have to change the setting in Git to use the Atom editor in Git Bash.
 
 To set Atom as default:   
 `git config --global core.editor "atom --wait"`
 
-If you're having trouble, please ask your instructor/TAs for help.
-
 ### Mac OS
-`nano` is a basic editor and the default that instructors use in the
-workshop. See the Git installation [video
-tutorial](https://www.youtube.com/watch?v=9LQhwETCdwY%20) for an example
-on how to open nano. It should be pre-installed.
+Install [Atom](https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-mac) for Mac OS.
 
-Others editors that you can use:
-- the default `TextEdit` on Mac (`open -e` from the command line), 
-- [BBEdit](https://www.barebones.com/products/bbedit/)
-- [Sublime Text](https://www.sublimetext.com/).
+Git Bash uses Vim as an editor so you have to change the setting in Git to use the Atom editor in Git Bash.
+
+To set Atom as default:   
+`git config --global core.editor "atom --wait"`
 
 ### Linux 
-`nano` is a basic editor and the default that instructors use in the
-workshop. It should be pre-installed.
+Install [Atom](https://flight-manual.atom.io/getting-started/sections/installing-atom/#platform-linux) for Linux. 
 
-Others editors that you can use are
-[Gedit](https://wiki.gnome.org/Apps/Gedit),
-[Kate](https://kate-editor.org/) or [Sublime
-Text](https://www.sublimetext.com/).
+Git Bash uses Vim as an editor so you have to change the setting in Git to use the Atom editor in Git Bash.
 
+To set Atom as default:   
+`git config --global core.editor "atom --wait"`
 
 ## 4. Anaconda Python
 
@@ -266,3 +261,24 @@ Brief step-by-step instructions to get up and running with `conda` follow.
    The [conda forge channel](https://conda-forge.github.io/) channel has many of the packages not in the default repositories.
 
 [offical documentation]: https://docs.continuum.io/anaconda/#navigator-or-conda
+
+
+# Assignment 1 Instructions (6 marks)
+To confirm that you've successfully installed the software and are ready to start the course, submit the items below as a single PDF document addressing the following:
+
+1. GitHub account handle/username. (1 mark) 
+2. Screenshot of the output of the following to confirm you have installed Anaconda Python. Type this into your bash terminal.  (1 mark)  
+` conda --version`
+3. Set up your `git` user profile which keeps track of the user/email who contributes to git commits (versions of code you've saved). (2 marks)
+    For marks, take a screenshot of your terminal window after the following:
+    1. Set your username:  
+    `git config --global user.name <yourname>`  
+    for example:  
+    `git config --global user.name linatran`  
+    2. Set your email:  
+    `git config --global user.email <email-used-for-GitHub>`  
+    for example:  
+    `git config --global user.email bme1478@gmail.com`  
+    3. Save the screenshot of these commands and output and insert the image into the PDF  you are submtting.
+4. Complete the survey: https://forms.gle/QFWXavEYSNhvZu3aA (2 marks)
+    - No need to add to the document, but make sure you use your name as it shows on Quercus so we can assign your grade for doing the survey.
