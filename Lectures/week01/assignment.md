@@ -20,11 +20,10 @@ Copy all the folders' contents except the Jpegs to another location (e.g. anothe
 
 She was not consistent in naming the note files during the experiments, and sometimes even forgot to make a note.
 ## 2
-Help her to document which folders miss a note file. Write the information in a spreadsheet, it can be a row for each folder and a column for 'note file', stating 'yes' or 'no'
-Repeat the script, and make a second column for documenting if the folder includes the demographic spreadsheet.
+Help her to document which folders miss a note file.
+Repeat the same for the demographic spreadsheet.
 ## 3
-Rename all the note text files to this template:
-notes-name of the folder, e.g. notes-20190912-0.txt
+Rename all the note text files to this template: notes.txt
 ## 4
-Over the course of a few months, she copied her experiment data on an external hard drive.
+Over the course of a few months, she gradually copied her experiment data from the PC in the examination room on an external hard drive.
 She wants to do a final check that there is in fact a copy of all the folders in the hard drive. Help her compare the list of all the folders across the main computer and the hard drive.

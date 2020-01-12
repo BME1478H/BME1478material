@@ -252,7 +252,7 @@ so, if you want to make a series of new directories (let's say 10) for datasets 
 answer:
 ```
 for num in $(seq 01 10); do
-mkdir "daraset$num"
+mkdir "data$num"
 done
 ```
 
