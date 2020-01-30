@@ -1,5 +1,5 @@
 ---
-title: Assignments - Introduction to Bash
+title: Assignment - Introduction to Bash
 author: Sara
 ---
 The folder Assignment-data contains datasets you need to work with. Here is the scenario:
@@ -36,19 +36,26 @@ Below are only one alternative of the required tasks could be done:
 We start the terminal in Desktop, with the Assignment-data folder copied there:
 ## 1
 to copy all files over except selected type
+
 `cp -r assignment-data assignment-data-backup`
+
 `rm -r assignment-data-backup/*/*.jpg`
 
 ## 2
 to find which folders miss a certain type of file
+
 `cd assignment-data`
+
 `comm -3 <(find */*note* -printf '%h\n') <(find * -type d)`
 
 # 3
 to change names to a certain template
+
 `for f in 2018*; do cd $f; mv *not* note.txt; cd ..; done`
 
 # 4
 to compare what two directories contain
+
 `cd ..
+
 comm -3 <(ls assignment-data) <(ls assignment-data-backup)`
