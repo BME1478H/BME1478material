@@ -56,6 +56,6 @@ to change names to a certain template
 # 4
 to compare what two directories contain
 
-`cd ..
+`cd ..`
 
-comm -3 <(ls assignment-data) <(ls assignment-data-backup)`
+`comm -3 <(ls assignment-data) <(ls assignment-data-backup)`
