@@ -4,12 +4,14 @@ import numpy as np
 
 # hide traceback, works in Python <= 3.6
 # if still printing a lot, try setting to 0 (Python > 3.7)
-#ssys.tracebacklimit = None
+#sys.tracebacklimit = None
 
-class TestError(BaseException):
-    pass
+def test_squared_error(local_vars, errors):
+    try:
+        fn = local_vars['squared_error']
+    except KeyError as e:
+        errors.append(f"squared_error undefined, {e}")
 
-def test_squared_error(fn, errors):
     a = np.array([1,2,3])
     b = np.array([4.2,1,6.3])
     output = fn(a, b)
@@ -26,6 +28,8 @@ def test_variables(vars_dict, errors):
     variables_fuzzy = ['t', 'best_fit', 'population_size',
                        'population_size_noise', 'range_rate']
 
+    t = np.arange(0,10,.2)
+    range_rate = np.arange(.1,1.1,.1)
     # check existence and values of variables
     for i in variables_exact:
         if ((i in vars_dict) or (i.lower() in vars_dict)):
@@ -34,25 +38,25 @@ def test_variables(vars_dict, errors):
         else:
             errors.append(f"Variable {i} is undefined")
 
+    # checking variables with more flexible definitions
     for i in variables_fuzzy:
         if not ((i in vars_dict) or (i.lower() in vars_dict)):
             errors.append(f"Variable {i} is undefined")
 
-    # checking variables with more flexible definitions
+    # t is the correct range of values
     try:
-        # t is the correct range of values
-        if not np.equal(vars_dict['t'][:10],np.arange(0,10,0.2)[:10]).all():
-            errors.append(f"Variable t defined as {vars_dict['t'][:10]} when it should be {np.arange(0,10,0.2)[:10]} \
+        if not np.equal(vars_dict['t'][:10],t[:10]).all():
+            errors.append(f"Variable t defined as {vars_dict['t'][:10]} when it should be {t[:10]} \
                 \n (First 10 indices)")
     except Exception as e:
-        errors.append(f"variable t, {e}")
+        errors.append(f"variable t undefined, {e}")
 
     # range_rate is the correct range of values
     try:
-        if not np.equal(vars_dict['range_rate'][:5],np.arange(0.1,1.1,0.1)[:5]).all():
-            errors.append(f"Variable range_rate defined as {vars_dict['range_rate'][:10]} when it should be {np.arange(0,1.1,0.1)}")
+        if not np.equal(vars_dict['range_rate'][:5],range_rate[:5]).all():
+            errors.append(f"Variable range_rate defined as {vars_dict['range_rate'][:5]} when it should be {range_rate[:5]}")
     except Exception as e:
-        errors.append(f"Range_rate undefined")
+        errors.append(f"Range_rate undefined, e")
 
 
     # best_fit is approximately 0.4
@@ -80,7 +84,7 @@ def test_variables(vars_dict, errors):
     return errors
 
 
-def check_script(fname):
+def check_scripts(fname):
     error_summary = []
     with open(fname) as f:
         try:
@@ -95,33 +99,35 @@ def check_script(fname):
             # stop here as the rest can't be checked
             return error_summary
         local_vars = locals()
-        try:
-            error_summary = test_squared_error(local_vars['squared_error'],
-                                            error_summary)
-        except KeyError as e:
-            error_summary.append(f"Undefined variable, {e}")
-        error_summary = test_variables(local_vars, error_summary)
+        test_fns = [test_squared_error, test_variables]
+        for fn in test_fns:
+            error_summary = fn(local_vars, error_summary)
 
     return error_summary
 
-assignments_directory = sys.argv[-1].rstrip('/')
-fnames = glob(f'{assignments_directory}/*.py*')
-full_marks = []
-check_files = []
 
-summary_text = {}
-for file_path in fnames:
-    file_name = os.path.basename(file_path)
-    print(file_name)
-    errors = check_script(file_path)
-    if not len(errors):
-        print("All checks passed")
-        summary_text[file_name] = "All checks passed"
-    else:
-        summary_text[file_name] = "\n".join(errors)
+def main():
+    assignments_directory = sys.argv[-1].rstrip('/')
+    fnames = glob(f'{assignments_directory}/*.py*')
+    summary_text = {}
 
-with open("assignment_summary.txt", "w") as text_file:
-    for student in summary_text:
-        print(f"{student}: \n{summary_text[student]}\n\n", file=text_file)
+    for file_path in fnames:
+        file_name = os.path.basename(file_path)
+        print(file_name)
+        errors = check_script(file_path)
 
-print("Completed Successfully")
+        if len(errors):
+            msg = "\n".join(errors)
+        else:
+            msg = "All check passed."
+
+        summary_text[file_name] = msg
+
+    with open("assignment_summary.txt", "w") as text_file:
+        for student in summary_text:
+            print(f"{student}: \n{summary_text[student]}\n", file=text_file)
+
+    print("Completed Successfully")
+
+if __name__ == "__main__":
+    main()
