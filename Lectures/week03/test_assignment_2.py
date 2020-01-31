@@ -123,3 +123,5 @@ for file_path in fnames:
 with open("assignment_summary.txt", "w") as text_file:
     for student in summary_text:
         print(f"{student}: \n{summary_text[student]}\n\n", file=text_file)
+
+print("Completed Successfully")
