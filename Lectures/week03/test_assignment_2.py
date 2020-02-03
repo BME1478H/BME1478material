@@ -73,14 +73,6 @@ def test_variables(vars_dict, errors):
     except Exception as e:
         errors.append(f"Undefined variable, {e}")
 
-    # mse should be same size as range_rate
-    try:
-        if len(vars_dict['mse']) != len(vars_dict['range_rate']):
-            errors.append(f"mse ({len(vars_dict['mse'])}) \
-                should be same length as range_rate ({len(vars_dict['range_rate'])})")
-    except Exception as e:
-        errors.append(f"Undefined variable, {e}")
-
     return errors
 
 
@@ -114,7 +106,7 @@ def main():
     for file_path in fnames:
         file_name = os.path.basename(file_path)
         print(file_name)
-        errors = check_script(file_path)
+        errors = check_scripts(file_path)
 
         if len(errors):
             msg = "\n".join(errors)
