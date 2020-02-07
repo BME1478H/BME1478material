@@ -1,0 +1,485 @@
+<h2 id="lesson-objectives">Lesson objectives:</h2>
+<h1 id="command-line-python">Command line python</h1>
+<p>The Jupyter Notebook and other interactive tools are great for prototyping code and exploring data, but we ultimately want to use our program in a pipeline to process many data files, run it with many different parameters, or combine it with other programs in the data analysis pipeline. The easiest way to do this effectively is often to turn our code into a standalone program that can be run in a shell terminal just like other command-line tools (Taschuk and Wilson, 2017).</p>
+<blockquote>
+<p>In this lesson we are switching from typing commands in a Python interpreter to typing commands in a shell terminal window (such as Git-bash). When you see a $ in front of a command that tells you to run that command in the shell rather than the Python interpreter.</p>
+</blockquote>
+<p>Note before we start: positioning our terminal: open your terminal in the Project directory that we defined in the previous lesson Project |__code |__data and cd to the code directory.</p>
+<h2 id="command-line-arguments">Command-Line Arguments</h2>
+<p>Using Atom (or any text editor of your choice), save the following commands in the a text file called <code>sys_version.py</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">Atom</span> <span class="kw">`</span><span class="ex">sys_version.py</span><span class="kw">`</span></a></code></pre></div>
+<p>when open, copy these Python commands in the text file and hit save.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="bu">print</span> (<span class="st">&#39;version is&#39;</span>, sys.version)</a></code></pre></div>
+<p>alternatively: - open Atom - hit <code>New File</code>, - type the above Python commands and - save it with <code>sys_version.py</code> name.</p>
+<p>note: .py files are basically text files.</p>
+<p>The first line imports a library called sys, which is short for “system”. It defines values such as <code>sys.version</code>, which describes which version of Python we are running. We can run this script from the command line like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1">$ <span class="ex">python</span> sys_version.py</a></code></pre></div>
+<p>you will get an output that gives you the version of Python installed on your machine, something like this:</p>
+<pre class="text"><code>version is 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]</code></pre>
+<blockquote>
+<p>Note for Windows users: if you get an error or no output, it’s probably because of a conflict with the Python that is added into the Windows Store. type “manage app execution aliases” into the Windows search prompt and disable the store versions of Python. see <a href="https://stackoverflow.com/questions/56974927/permission-denied-trying-to-run-python-on-windows-10">here</a> for more info.</p>
+</blockquote>
+<p>Let’s create another file called <code>argv_list.py</code> and save the following text to it.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="bu">print</span>(<span class="st">&#39;sys.argv is&#39;</span>, sys.argv)</a></code></pre></div>
+<p>The strange name <code>argv</code> stands for “argument values”. Whenever Python runs a program, it takes all of the values given on the command line and puts them in the list <code>sys.argv</code> so that the program can determine what they were. If we run this program with no arguments:</p>
+<pre class="text"><code>sys.argv is [&#39;argv_list.py&#39;]</code></pre>
+<p>the only thing in the list is the full path to our script, which is always <code>sys.argv[0]</code>. If we run it with a few arguments, however:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1">$ python argv_list.py first second third</a></code></pre></div>
+<p>then Python adds each of those arguments to that magic list.</p>
+<pre class="text"><code>sys.argv is [&#39;argv_list.py&#39;, &#39;first&#39;, &#39;second&#39;, &#39;third&#39;]</code></pre>
+<p>With this in hand, let’s continue with the example of data analysis for our inflammation study. Here we may want a program that reads a dataset and prints the average inflammation per patient.</p>
+<p>Let’s change directory to our data folder: <code>cd ../data</code></p>
+<p>The first step is to write a function that outlines our implementation. Open a new file in Atom, named <code>stats_01.py</code> (remember that you have set Atom as the default editor in bash and you can open it right there)</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1">$ <span class="ex">Atom</span> ../code/stats_01.py</a></code></pre></div>
+<p>and copy the following and save:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="im">import</span> numpy</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw">def</span> average_inflammation():</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">    script <span class="op">=</span> sys.argv[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">    filename <span class="op">=</span> sys.argv[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">    data <span class="op">=</span> numpy.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">    <span class="bu">print</span>(<span class="st">&#39;running &#39;</span>, script)</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">    <span class="cf">for</span> row_mean <span class="kw">in</span> numpy.mean(data, axis<span class="op">=</span><span class="dv">1</span>):</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">        <span class="bu">print</span>(row_mean)</a></code></pre></div>
+<p>This function gets the name of the script from <code>sys.argv[0]</code>, because that’s where it’s always put, and the name of the file to process from <code>sys.argv[1]</code>.</p>
+<p>let’s run this:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1">$ <span class="ex">python</span> ../code/stats_01.py inflammation-01.csv</a></code></pre></div>
+<p>There is no output because we have defined a function, but haven’t actually called it. Similar to when we defined a function in a cell in Jupyter Notebook and execute the cell, which we have seen that nothing happens. Let’s add a call to the <code>average_inflammation</code> function to our script:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1">$ <span class="ex">Atom</span> ../code/stats_02.py</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="im">import</span> numpy</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="kw">def</span> average_inflammation():</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">    script <span class="op">=</span> sys.argv[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">    filename <span class="op">=</span> sys.argv[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">    data <span class="op">=</span> numpy.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">    <span class="bu">print</span>(<span class="st">&#39;running &#39;</span>, script)</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">    <span class="cf">for</span> row_mean <span class="kw">in</span> numpy.mean(data, axis<span class="op">=</span><span class="dv">1</span>):</a>
+<a class="sourceLine" id="cb13-11" data-line-number="11">        <span class="bu">print</span>(row_mean)</a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb13-14" data-line-number="14">   average_inflammation()</a></code></pre></div>
+<p>Why is the call to our function is in an if statement and what does it mean? <code>__name__</code> is a special built-in variable in Python: when a python script is run directly this variable is set as <code>__main__</code>, and when the script is imported within another script, the <code>__name__</code> variable is set to the name of that script (e.g. here ‘stats_01’). When we import a script, we don’t necessarily expect an output from the function(s) in the script, we import the script to call the functions later (recall we import numpy and then use the functions later). But when we run the script directly, we want to call and see the outputs of the functions. Therefore, we put the call for the function in a conditional statement to only be executed when the script is run directly:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">    `whatever function that produces output`</a></code></pre></div>
+<p>now run that in terminal for one of the inflammation datasets:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1">$ <span class="ex">python</span> ../code/stats_02.py inflammation-01.csv</a></code></pre></div>
+<pre class="text"><code>running  ../code/stats_02.py
+5.45
+5.425
+6.1
+5.9
+5.55
+6.225
+5.975
+6.65
+6.625
+6.525
+6.775
+5.8
+6.225
+5.75
+5.225
+6.3
+6.55
+5.7
+5.85
+6.55
+5.775
+5.825
+6.175
+6.1
+5.8
+6.425
+6.05
+6.025
+6.175
+6.55
+6.175
+6.35
+6.725
+6.125
+7.075
+5.725
+5.925
+6.15
+6.075
+5.75
+5.975
+5.725
+6.3
+5.9
+6.75
+5.925
+7.225
+6.15
+5.95
+6.275
+5.7
+6.1
+6.825
+5.975
+6.725
+5.7
+6.25
+6.4
+7.05
+5.9</code></pre>
+<p>For the rest of the tutorial we’re going to use the small*.csv files in the data set, since showing 60 lines of output per file makes the tutorial messy. These files only contain three days of data for two patients. we can easily see the whole content in the terminal:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1">$ <span class="fu">cat</span> small-01.csv</a></code></pre></div>
+<pre class="text"><code>0,0,1
+0,1,2</code></pre>
+<p>and running our script for one of them:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1">$ <span class="ex">python</span> ../code/stats_01.py small-01.csv</a></code></pre></div>
+<pre class="text"><code>running  stats_01.py
+0.3333333333333333
+1.0</code></pre>
+<p>Using small data files as input also allows us to check our results more easily: here, for example, we can see that our program is calculating the mean correctly for each line, whereas we were really taking it on faith before. This is yet another rule of programming: test the simple things first.</p>
+<h2 id="handling-multiple-files">Handling Multiple Files</h2>
+<p>The next step is to teach our program how to handle multiple files. We want our program to process each file separately, so we need a loop that executes once for each filename. If we specify the files on the command line, the filenames will be in <code>sys.argv</code>, but we need to be careful: <code>sys.argv[0]</code> will always be the name of our script, rather than the name of a file. We also need to handle an unknown number of filenames, since our program could be run for any number of files.</p>
+<p>The solution to both problems is to loop over the contents of <code>sys.argv[1:]</code>. The ‘1’ tells Python to start the slice at location 1, so the program’s name isn’t included; since we’ve left off the upper bound, the slice runs to the end of the list, and includes all the filenames. Let’s modify our script and call it <code>stats_03.py</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="im">import</span> numpy</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw">def</span> average_inflammation():</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">    script <span class="op">=</span> sys.argv[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">    <span class="cf">for</span> filename <span class="kw">in</span> sys.argv[<span class="dv">1</span>:]:</a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">        <span class="bu">print</span>(<span class="st">&#39;running &#39;</span>, script, <span class="st">&#39;for &#39;</span>, filename)</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">        data <span class="op">=</span> numpy.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</a>
+<a class="sourceLine" id="cb21-10" data-line-number="10">        <span class="cf">for</span> row_mean <span class="kw">in</span> numpy.mean(data, axis<span class="op">=</span><span class="dv">1</span>):</a>
+<a class="sourceLine" id="cb21-11" data-line-number="11">            <span class="bu">print</span>(row_mean)</a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb21-14" data-line-number="14">   average_inflammation()</a></code></pre></div>
+<p>and run it:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" data-line-number="1">$ <span class="ex">python</span> ../code/stats_03.py small-01.csv small-02.csv</a></code></pre></div>
+<pre class="text"><code>running  ../code/stats_03.py for  small-01.csv
+0.3333333333333333
+1.0
+running  ../code/stats_03.py for  small-02.csv
+13.666666666666666
+11.0</code></pre>
+<h2 id="handling-command-line-flags">Handling Command-Line Flags</h2>
+<p>The next step is to teach our program to pay attention to the <code>--min</code>, <code>--mean</code>, and <code>--max</code> flags. These always appear before the names of the files, so we modify further as below and call it <code>stats_04.py</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="im">import</span> numpy</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="kw">def</span> stats_inflammation(): <span class="co"># note that we changed the name of the function only to be more descriptive of the what it is doing</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">    script <span class="op">=</span> sys.argv[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb24-7" data-line-number="7">    action <span class="op">=</span> sys.argv[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb24-8" data-line-number="8">    filenames <span class="op">=</span> sys.argv[<span class="dv">2</span>:]</a>
+<a class="sourceLine" id="cb24-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb24-10" data-line-number="10">    <span class="cf">for</span> filename <span class="kw">in</span> filenames:</a>
+<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#        print(&#39;running &#39;, script, &#39;for &#39;, filename) and we can also disable this line since it&#39;s giving us redundant info</span></a>
+<a class="sourceLine" id="cb24-12" data-line-number="12">        data <span class="op">=</span> numpy.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</a>
+<a class="sourceLine" id="cb24-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb24-14" data-line-number="14">        <span class="cf">if</span> action <span class="op">==</span> <span class="st">&#39;--min&#39;</span>:</a>
+<a class="sourceLine" id="cb24-15" data-line-number="15">            values <span class="op">=</span> numpy.<span class="bu">min</span>(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb24-16" data-line-number="16">        <span class="cf">elif</span> action <span class="op">==</span> <span class="st">&#39;--mean&#39;</span>:</a>
+<a class="sourceLine" id="cb24-17" data-line-number="17">            values <span class="op">=</span> numpy.mean(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb24-18" data-line-number="18">        <span class="cf">elif</span> action <span class="op">==</span> <span class="st">&#39;--max&#39;</span>:</a>
+<a class="sourceLine" id="cb24-19" data-line-number="19">            values <span class="op">=</span> numpy.<span class="bu">max</span>(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb24-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb24-21" data-line-number="21">        <span class="cf">for</span> val <span class="kw">in</span> values:</a>
+<a class="sourceLine" id="cb24-22" data-line-number="22">            <span class="bu">print</span>(val)</a>
+<a class="sourceLine" id="cb24-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb24-24" data-line-number="24"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb24-25" data-line-number="25">   stats_inflammation()</a></code></pre></div>
+<p>and it works:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="ex">python</span> ../code/stats_04.py --max small-01.csv</a></code></pre></div>
+<pre class="text"><code>1.0
+2.0</code></pre>
+<p>but there are several things wrong with it:</p>
+<ol type="1">
+<li><p><code>stats_inflammation</code> is too large to read comfortably.</p></li>
+<li><p>If we do not specify at least two additional arguments on the command-line, one for the flag and one for the filename, but only one, the program will not throw an exception but will run. It assumes that the file list is empty, as <code>sys.argv[1]</code> will be considered the action, even if it is a filename. Silent failures like this are always hard to debug.</p></li>
+<li><p>The program should check if the submitted action is one of the three recognized flags.</p></li>
+</ol>
+<p>This version checks that action is one of the allowed flags before doing any processing, so that the program fails fast, and then runs our stats function on each file in a loop. We save this version as <code>stats_05.py</code></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="im">import</span> numpy</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw">def</span> main():</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">    script <span class="op">=</span> sys.argv[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">    action <span class="op">=</span> sys.argv[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8">    filenames <span class="op">=</span> sys.argv[<span class="dv">2</span>:]</a>
+<a class="sourceLine" id="cb27-9" data-line-number="9">    <span class="cf">assert</span> action <span class="kw">in</span> [<span class="st">&#39;--min&#39;</span>, <span class="st">&#39;--mean&#39;</span>, <span class="st">&#39;--max&#39;</span>], <span class="op">\</span></a>
+<a class="sourceLine" id="cb27-10" data-line-number="10">           <span class="co">&#39;Action is not one of --min, --mean, or --max: &#39;</span> <span class="op">+</span> action</a>
+<a class="sourceLine" id="cb27-11" data-line-number="11">    <span class="cf">for</span> filename <span class="kw">in</span> filenames:</a>
+<a class="sourceLine" id="cb27-12" data-line-number="12">        stats_inflammation(filename, action)</a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb27-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="kw">def</span> stats_inflammation(filename,action):</a>
+<a class="sourceLine" id="cb27-16" data-line-number="16">        <span class="co"># print(&#39;running &#39;, script, &#39;for &#39;, filename)</span></a>
+<a class="sourceLine" id="cb27-17" data-line-number="17">        data <span class="op">=</span> numpy.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</a>
+<a class="sourceLine" id="cb27-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb27-19" data-line-number="19">        <span class="cf">if</span> action <span class="op">==</span> <span class="st">&#39;--min&#39;</span>:</a>
+<a class="sourceLine" id="cb27-20" data-line-number="20">            values <span class="op">=</span> numpy.<span class="bu">min</span>(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb27-21" data-line-number="21">        <span class="cf">elif</span> action <span class="op">==</span> <span class="st">&#39;--mean&#39;</span>:</a>
+<a class="sourceLine" id="cb27-22" data-line-number="22">            values <span class="op">=</span> numpy.mean(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb27-23" data-line-number="23">        <span class="cf">elif</span> action <span class="op">==</span> <span class="st">&#39;--max&#39;</span>:</a>
+<a class="sourceLine" id="cb27-24" data-line-number="24">            values <span class="op">=</span> numpy.<span class="bu">max</span>(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb27-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb27-26" data-line-number="26">        <span class="cf">for</span> val <span class="kw">in</span> values:</a>
+<a class="sourceLine" id="cb27-27" data-line-number="27">            <span class="bu">print</span>(val)</a>
+<a class="sourceLine" id="cb27-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb27-29" data-line-number="29"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb27-30" data-line-number="30">   main()</a></code></pre></div>
+<p>This is four lines longer than its predecessor, but broken into more digestible chunks of 8 and 12 lines.</p>
+<h2 id="handling-standard-input">Handling Standard Input</h2>
+<p>The next thing our program has to do is read data from standard input if no filenames are given so that we can put it in a pipeline, redirect input to it, and so on.</p>
+<p>We can do this by using <code>sys.stdin</code> which is how “standard input” is handled in Python. Standard input is a file-like object, which as it’s name suggests is the standard communication channel between a program and it’s environment. When we use piping the program uses the standard input channel to transfer input from one command to another (or when we use &lt; and the name of a file, the program opens the file, and uses the standard input for transfer, instead of reading the file). So, we now need to rewrite the program so that it loads data from <code>sys.stdin</code> if no filenames are provided. Luckily, <code>numpy.loadtxt</code> can handle either a filename or an open file as its first parameter, so we don’t actually need to change our stats function, Only <code>main</code> changes. we call this stats_06.py:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="im">import</span> numpy</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="kw">def</span> main():</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">    script <span class="op">=</span> sys.argv[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">    action <span class="op">=</span> sys.argv[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">    filenames <span class="op">=</span> sys.argv[<span class="dv">2</span>:]</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9">    <span class="cf">assert</span> action <span class="kw">in</span> [<span class="st">&#39;--min&#39;</span>, <span class="st">&#39;--mean&#39;</span>, <span class="st">&#39;--max&#39;</span>], <span class="op">\</span></a>
+<a class="sourceLine" id="cb28-10" data-line-number="10">           <span class="co">&#39;Action is not one of --min, --mean, or --max: &#39;</span> <span class="op">+</span> action</a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">    <span class="cf">if</span> <span class="bu">len</span>(filenames) <span class="op">==</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb28-12" data-line-number="12">        stats_inflammation(sys.stdin, action)</a>
+<a class="sourceLine" id="cb28-13" data-line-number="13">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14">        <span class="cf">for</span> filename <span class="kw">in</span> filenames:</a>
+<a class="sourceLine" id="cb28-15" data-line-number="15">            stats_inflammation(filename, action)</a>
+<a class="sourceLine" id="cb28-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb28-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb28-18" data-line-number="18"><span class="kw">def</span> stats_inflammation(filename,action):</a>
+<a class="sourceLine" id="cb28-19" data-line-number="19">        <span class="co"># print(&#39;running &#39;, script, &#39;for &#39;, filename)</span></a>
+<a class="sourceLine" id="cb28-20" data-line-number="20">        data <span class="op">=</span> numpy.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</a>
+<a class="sourceLine" id="cb28-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb28-22" data-line-number="22">        <span class="cf">if</span> action <span class="op">==</span> <span class="st">&#39;--min&#39;</span>:</a>
+<a class="sourceLine" id="cb28-23" data-line-number="23">            values <span class="op">=</span> numpy.<span class="bu">min</span>(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb28-24" data-line-number="24">        <span class="cf">elif</span> action <span class="op">==</span> <span class="st">&#39;--mean&#39;</span>:</a>
+<a class="sourceLine" id="cb28-25" data-line-number="25">            values <span class="op">=</span> numpy.mean(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb28-26" data-line-number="26">        <span class="cf">elif</span> action <span class="op">==</span> <span class="st">&#39;--max&#39;</span>:</a>
+<a class="sourceLine" id="cb28-27" data-line-number="27">            values <span class="op">=</span> numpy.<span class="bu">max</span>(data, axis<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb28-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb28-29" data-line-number="29">        <span class="cf">for</span> val <span class="kw">in</span> values:</a>
+<a class="sourceLine" id="cb28-30" data-line-number="30">            <span class="bu">print</span>(val)</a>
+<a class="sourceLine" id="cb28-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb28-32" data-line-number="32"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</a>
+<a class="sourceLine" id="cb28-33" data-line-number="33">   main()</a></code></pre></div>
+<p>Let’s try it out:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" data-line-number="1">$ <span class="ex">python</span> ../code/stats_06.py --max <span class="op">&lt;</span> small-01.csv</a></code></pre></div>
+<pre class="text"><code>1.0
+2.0</code></pre>
+<blockquote>
+<h2 id="challenge">Challenge:</h2>
+</blockquote>
+<p>So far we have created several versions of our script called stats_01.py, stats_02.py, and stats_03.py, etc. We wouldn’t do this in real life: instead, we would have one file called stats.py that we committed to version control every time we got an enhancement working.</p>
+<h1 id="version-control-with-git">Version Control with Git</h1>
+<p>Git is a version control system. Version control systems start with a base version of the document (our stats_01.py) and then record changes you make each step of the way. You only need to have one file, which shows you the most recent version, but you always can rewind on each change you made, and revive the document at each phase.</p>
+<p>This is very helpful for not cluttering your workspace with redundant copies of the same work but at the same time keep track of the history of your work to go back in time at any point you need. It is also very helpful when multiple people are working on the same document (e.g. code) since a version control system also keeps track of who made the changes.</p>
+<p>A version control system is automatic in the sense that when it’s called, it automatically keeps track of changes (what) and metadata of the changes (who and when), which all together make up a “repository”. But, it’s you who have to operate it. So you have to create a repository and you have to decide which changes you want to keep a history of. For this, you have to run certain Git commands.</p>
+<p>There are two main commands: - <code>git init</code>: to create a repository - <code>git add</code>: to mark the changes that we want to keep track of - <code>git commit</code>: to actually create a version of the state of change as seen in <img src="git-staging-area.svg" alt="Figure" /></p>
+<h2 id="creating-a-repository">Creating a repository</h2>
+<p>first cd to code directory and create a repository there. We said we want to have only one file for the stats code and apply the improvements on that, so let’s rename the first file we made:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb31-1" data-line-number="1">$ <span class="bu">cd</span> ../code</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="fu">mv</span> stats_01.py stats.py</a></code></pre></div>
+<p>create a repository:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb32-1" data-line-number="1">$ <span class="fu">git</span> init</a></code></pre></div>
+<p>We can check that everything is set up correctly by asking Git to tell us the status of our project:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb33-1" data-line-number="1">$ <span class="fu">git</span> status</a></code></pre></div>
+<pre class="text"><code>On branch master
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        argv_list.py
+        stats.py
+        stats_02.py
+        stats_03.py
+        stats_04.py
+        stats_05.py
+        stats_06.py
+        sys_version.py
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
+<h2 id="tracking-changes">Tracking changes</h2>
+<p>keep track of our first version of stats, and the two other separate functions we have created.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb35-1" data-line-number="1">$ <span class="fu">git</span> add argv_list.py sys_version.py stats.py</a></code></pre></div>
+<p>if we run <code>git status</code> again:</p>
+<pre class="text"><code>On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+
+        new file:   argv_list.py
+        new file:   stats.py
+        new file:   sys_version.py
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        stats_02.py
+        stats_03.py
+        stats_04.py
+        stats_05.py
+        stats_06.py
+</code></pre>
+<p>Let’s commit our changes:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb37-1" data-line-number="1">$ <span class="fu">git</span> commit -m <span class="st">&quot;start stats code&quot;</span></a></code></pre></div>
+<pre class="text"><code>[master (root-commit) 440c19e] start stats code
+ 3 files changed, 26 insertions(+)
+ create mode 100644 argv_list.py
+ create mode 100644 stats_01.py
+ create mode 100644 sys_version.py</code></pre>
+<p>When we run <code>git commit</code>, Git takes everything we have told it to save by using <code>git add</code> and stores a copy permanently inside the special .git directory. This permanent copy is called a commit (or revision) and its short identifier is 440c19e. Your commit may have another identifier.</p>
+<p>We use the -m flag (for “message”) to record a short, descriptive, and specific comment that will help us remember later on what we did and why. If we just run <code>git commit</code> without the -m option, Git will launch whatever other editor we configured as ‘core.editor’ so that we can write a longer message.</p>
+<p>Good commit messages start with a brief (&lt;50 characters) statement about the changes made in the commit. Generally, the message should complete the sentence “If applied, this commit will” .</p>
+<p>If we run <code>git status</code> now:</p>
+<pre class="text"><code>On branch master
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        stats_02.py
+        stats_03.py
+        stats_04.py
+        stats_05.py
+        stats_06.py
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
+<p>It tells everything that was added to be tracked is up-to-date (and there are some untracked files we want to ignore for now).</p>
+<p>If we want to know what we’ve done recently, we can ask Git to show us the project’s history using <code>git log</code>:</p>
+<pre class="text"><code>commit be2d45d60960a51a9b50343e0a63e8ca3bdd9a5c
+Author: SaraMati &lt;sara.mahallati@gmail.com&gt;
+Date:   Fri Feb 7 01:06:54 2020 -0500
+
+    start stats code</code></pre>
+<p><code>git log</code> lists all commits made to a repository in reverse chronological order. The listing for each commit includes the commit’s full identifier (which starts with the same characters as the short identifier printed by the git commit command earlier), the commit’s author, when it was created, and the log message Git was given when the commit was created.</p>
+<p>Let’s reiterate what we did when building our code, phase two was to add the conditional statement to the code (you can open stats_02.py and copy paste). Save stats.py and run ‘git status’ again:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="ex">On</span> branch master</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="ex">Changes</span> not staged for commit:</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed<span class="kw">)</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4">  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes in working directory<span class="kw">)</span></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb41-6" data-line-number="6">        <span class="ex">modified</span>:   stats.py</a>
+<a class="sourceLine" id="cb41-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb41-8" data-line-number="8"><span class="ex">Untracked</span> files:</a>
+<a class="sourceLine" id="cb41-9" data-line-number="9">  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git add &lt;file&gt;...&quot;</span> to include in what will be committed<span class="kw">)</span></a>
+<a class="sourceLine" id="cb41-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb41-11" data-line-number="11">        <span class="ex">stats_02.py</span></a>
+<a class="sourceLine" id="cb41-12" data-line-number="12">        <span class="ex">stats_03.py</span></a>
+<a class="sourceLine" id="cb41-13" data-line-number="13">        <span class="ex">stats_04.py</span></a>
+<a class="sourceLine" id="cb41-14" data-line-number="14">        <span class="ex">stats_05.py</span></a>
+<a class="sourceLine" id="cb41-15" data-line-number="15">        <span class="ex">stats_06.py</span></a>
+<a class="sourceLine" id="cb41-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb41-17" data-line-number="17"><span class="ex">no</span> changes added to commit (use <span class="st">&quot;git add&quot;</span> and/or <span class="st">&quot;git commit -a&quot;</span>)</a></code></pre></div>
+<p>The last line is the key phrase: “no changes added to commit”. We have changed this file, but we haven’t told Git we will want to save those changes (which we do with <code>git add</code>) nor have we saved them (which we do with <code>git commit</code>). So let’s do that now. It is good practice to always review our changes before saving them. We do this using <code>git diff</code>. This shows us the differences between the current state of the file and the most recently saved version:</p>
+<pre class="text"><code>diff --git a/stats.py b/stats.py
+index 63f7904..ea3d82f 100644
+--- a/stats.py
++++ b/stats.py
+@@ -9,3 +9,6 @@ def average_inflammation():
+     print(&#39;running &#39;, script)
+     for row_mean in numpy.mean(data, axis=1):
+         print(row_mean)
++
++if __name__ == &#39;__main__&#39;:
++   average_inflammation()</code></pre>
+<p>The output is cryptic because it is actually a series of commands for tools like editors and patch telling them how to reconstruct one file given the other. If we break it down into pieces:</p>
+<ul>
+<li>The first line tells us that Git is producing output similar to the Unix diff command comparing the old and new versions of the file.</li>
+<li>The second line tells exactly which versions of the file Git is comparing; 63f7904 and ea3d82f are unique computer-generated labels for those versions.</li>
+<li>The third and fourth lines once again show the name of the file being changed.</li>
+<li>The remaining lines are the most interesting, they show us the actual differences and the lines on which they occur. In particular, the + marker in the first column shows where we added a line. After reviewing our change, it’s time to commit it:</li>
+</ul>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" data-line-number="1">$ <span class="fu">git</span> commit -m <span class="st">&quot;add call to function&quot;</span></a></code></pre></div>
+<pre class="text"><code>On branch master
+Changes not staged for commit:
+        modified:   stats.py
+
+Untracked files:
+        stats_02.py
+        stats_03.py
+        stats_04.py
+        stats_05.py
+        stats_06.py
+
+no changes added to commit</code></pre>
+<p>Whoops: Git didn’t commit because we didn’t use git add first. Let’s fix that:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" data-line-number="1">$ <span class="fu">git</span> add stats.py</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2">$ <span class="fu">git</span> commit -m <span class="st">&quot;add call to function&quot;</span></a></code></pre></div>
+<pre class="text"><code>[master 7892f47] add call to function
+ 1 file changed, 3 insertions(+)</code></pre>
+<p>now that we have copied the contents of stats_02.py, we can delete that file.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb47-1" data-line-number="1">$ <span class="fu">rm</span> stats_02.py</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="fu">git</span> status</a></code></pre></div>
+<pre class="text"><code>On branch master
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        stats_03.py
+        stats_04.py
+        stats_05.py
+        stats_06.py
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
+<p>if we run <code>git log</code>:</p>
+<pre class="text"><code>commit 7892f474a6315fa5e40888f5473b39193c8cfdac
+Author: SaraMati &lt;sara.mahallati@gmail.com&gt;
+Date:   Fri Feb 7 01:30:53 2020 -0500
+
+    add call to function
+
+commit be2d45d60960a51a9b50343e0a63e8ca3bdd9a5c
+Author: SaraMati &lt;sara.mahallati@gmail.com&gt;
+Date:   Fri Feb 7 01:06:54 2020 -0500
+
+    start stats code
+</code></pre>
+<p>stats_02.py was removed without a trace, because it was never added to the staging area to be tracked.</p>
+<h2 id="recovering-old-versions">recovering old versions</h2>
+<p>from log we know the specific identifier of each phase (i.e. commit). We can restore them using <code>git checkout</code> commit:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb50-1" data-line-number="1">$ <span class="fu">git</span> checkout be2d45</a></code></pre></div>
+<p>note that we don’t need to write the long string of the identifier. now if you open the file, or run <code>cat stats.py</code> in the terminal, you can see that the file contains only the first phase of the code. If we want to go back to the latest version, we use <code>git checkout HEAD</code> this is the same as using it’s identifier.</p>
+<p>In the same manner, we can copy the full code into stats.py and remove the redundant files. You can do this as a challenge.</p>
+<blockquote>
+<h2 id="challenge-1">Challenge</h2>
+<ol type="1">
+<li>add a line to one of the stats scripts you haven’t tracked. it can be a simple comment. run git status and see what happens.</li>
+<li>copy the final version of the code in stats.py, and commit. remove extra files and run the status.</li>
+<li>add a comment to stats.py and check the status, then add and commit to familiarize yourself with the way it looks when everything is up to date and there are no untracked files.</li>
+</ol>
+</blockquote>
+<h2 id="github">Github</h2>
+<p>Although command line Git is very useful, GitHub allows for easy use of Git for collaborative purposes using a primarily point-and-click interface, in addition to providing a web-based hosting service for Git repositories (or ‘repos’).</p>
+<p>To sync the repository across different computers and to collaborate with others, Git is often used via <a href="http://www.github.com">GitHub</a>, a web-based service that hosts Git repositories. In the spirit of ‘working open’ and ensuring scientific reproducibility, it has also become increasingly common for scientists to upload scripts and related files to GitHub for others to use.</p>
+<h3 id="creating-a-fork">Creating a fork</h3>
+<p>The repos that have already been created can be thought of as ‘main repos’, which will contain the ‘primary’ version of the repo at any given point in time. However, instead of directly uploading and editing files right within this main repo itself, we will begin by <em>forking</em> the repo. When a given user forks a repo, GitHub creates a user-specific copy of the repo and all its files. go to the <a href="https://github.com/BME1478H/Winter2020class">class repo</a>. So far we have been using the issue section for asking questions from the TAs. The repo contains the same codes we worked on today.</p>
+<p>To fork this repo for yourself, navigate to the repo’s page and click on the ‘Fork’ button at the top right of the page. Following a brief load screen, GitHub will redirect you to your new, forked repo.</p>
+<h4 id="having-a-local-repository-of-what-you-forked">Having a local repository of what you forked</h4>
+<p>You want to have a version of this repository on your computer to work with, that is called your <code>local repository</code>. The repository in your Github account is usually called <code>origin</code>, and the one your forked from is called <code>upstream</code>. The relationship and commands between the different repositories are shown in below figure. <img src="github.png" alt="Github remotes and local" style="width:50.0%" /></p>
+<p>Head to your fork on GitHub, and click on the green ‘Clone or download’ button on the right side of the page. This yields a link to your fork. Copy this link to your clipboard.</p>
+<p>Next, open a bash shell, and navigate over to whichever folder you would like a copy of your repo to be saved in. Then, run:</p>
+<pre><code>git clone [repo link]</code></pre>
+<p>With the link in place of <code>[repo link]</code>. This process, known as <em>cloning</em>, will create a new folder in your current working directory that contains the contents of your fork. Enter this new folder with <code>cd</code> and type <code>git status</code> to make sure the repo has been cloned properly. <code>git status</code> should output that the branch is even with <code>origin/master</code>, indicating that it is currently the same as the current state of your fork.</p>
+<p>To get your fork up to date with the main repo, you next have to add a <em>remote</em> linking to the main repo. Head to your group’s repo and once again click on ‘Clone or download’ to grab its link. Then, using the main repo link, run:</p>
+<pre><code>git remote add upstream [repo link]</code></pre>
+<p>Once this is done, run:</p>
+<pre><code>git remote -v</code></pre>
+<p>to get a list of existing remotes. This should return four links, two of which are labelled <code>origin</code> and two of which are labelled <code>upstream</code>.</p>
+<h4 id="keeping-your-fork-up-to-date">Keeping your fork up to date</h4>
+<p>If there are changes in the class repo, you want to keep your local (and your Github repo, origin) synced. so you have to <em>fetch</em> the new changes that are in the main repo.</p>
+<pre><code>git fetch upstream</code></pre>
+<p>Once the edits have been downloaded, merge them into your local repo:</p>
+<pre><code>git merge upstream/master</code></pre>
+<p>Note: The <code>git pull</code> command combines two other commands, <code>git fetch</code> and <code>git merge</code>.</p>
+<p>Your local copy is now even with the main repo! do</p>
+<pre><code>git push origin master</code></pre>
+<p>to also update your cloud version.</p>
+<p>what if you modify the code further? You can push these changes to the GitHub version of your fork:</p>
+<pre><code>git push origin master</code></pre>
+<p>and if you want to also add this wonderful modification you made for all the class, you have to do this: if you go to your repo on Github, you see that it says ‘This branch is 1 commit ahead of BME1478H:master.’ and a sign for “Pull request”. In this way you are requesting the owner of the upstream repo to sync (i.e. pull) your changes. you create a <code>pull request</code> and based on the settings of that repo, either you or the owner can merge your pull request. a very useful feature is to ask for a <code>review</code> on your pull request, which you can learn on your own, along more terms that are useful to know, such as <code>branch</code>, <code>conflict</code>, etc. a good resource is the <a href="http://swcarpentry.github.io/git-novice/">software carpentry lesson</a>.</p>
