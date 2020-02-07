@@ -746,3 +746,58 @@ git push origin master
 and if you want to also add this wonderful modification you made for all the class, you have to do this:
 if you go to your repo on Github, you see that it says 'This branch is 1 commit ahead of BME1478H:master.' and a sign for "Pull request". In this way you are requesting the owner of the upstream repo to sync (i.e. pull) your changes. you create a `pull request` and based on the settings of that repo, either you or the owner can merge your pull request. a very useful feature is to ask for a `review` on your pull request, which you can learn on your own, along more terms that are useful to know, such as `branch`, `conflict`, etc.
 a good resource is the [software carpentry lesson](http://swcarpentry.github.io/git-novice/).
+
+
+# Supplementary material
+It's a best practice to Python’s `argparse` library to take arguments and parameters into our program. we will modify our code slightly to use this library, but you can learn how to even make the code more efficient by reading [Python's official documentation](https://docs.python.org/3/library/argparse.html)
+
+You can notice that the library takes care of reading from a pipeline and we can comment those section out of our code.
+
+```Python
+import sys
+import numpy
+import argparse
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('infile', nargs = '?', type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument('--stat', type = str)
+    args = parser.parse_args()
+
+    action = args.stat
+    filename = args.infile
+    assert action in ['min', 'mean', 'max'], \
+           'Action is not one of min, mean, or max: ' + action
+    # if len(filenames) == 0:
+    #     stats_inflammation(sys.stdin, action)
+    # else:
+    #     for filename in filenames:
+    stats_inflammation(filename, action)
+
+
+def stats_inflammation(filename,action):
+        data = numpy.loadtxt(filename, delimiter=',')
+
+        if action == 'min':
+            values = numpy.min(data, axis=1)
+        elif action == 'mean':
+            values = numpy.mean(data, axis=1)
+        elif action == 'max':
+            values = numpy.max(data, axis=1)
+
+        for val in values:
+            print(val)
+
+if __name__ == '__main__':
+   main()
+```
+we can run our script as below:
+
+```Bash
+$ python ../code/stats.py --stat 'min' < small-01.csv
+```
+or
+```Bash
+$ python ../code/stats.py --stat 'max' small-01.csv
+```
