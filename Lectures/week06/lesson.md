@@ -20,7 +20,7 @@ and cd to the code directory.
 Using Atom (or any text editor of your choice), save the following commands in the a text file called `sys_version.py`:
 
 ```Bash
-Atom `sys_version.py`
+ `sys_version.py`
 ```
 when open, copy these Python commands in the text file and hit save.
 
@@ -79,7 +79,7 @@ Let's change directory to our data folder: `cd ../data`
  The first step is to write a function that outlines our implementation. Open a new file in Atom, named `stats_01.py` (remember that you have set Atom as the default editor in bash and you can open it right there)
 
  ```Bash
- $ Atom ../code/stats_01.py
+ $ atom ../code/stats_01.py
  ```
 and copy the following and save:
 
@@ -106,7 +106,7 @@ $ python ../code/stats_01.py inflammation-01.csv
 There is no output because we have defined a function, but haven’t actually called it. Similar to when we defined a function in a cell in Jupyter Notebook and execute the cell, which we have seen that nothing happens. Let's add a call to the `average_inflammation` function to our script:
 
 ```Bash
-$ Atom ../code/stats_02.py
+$ atom ../code/stats_02.py
 ```
 
 ```Python
@@ -413,7 +413,7 @@ There are two main commands:
 - `git init`: to create a repository
 - `git add`: to mark the changes that we want to keep track of
 - `git commit`: to actually create a version of the state of change
-as seen in ![Figure](git-staging-area.svg)
+as seen in ![Figure](git-staging-area.png)
 
 
 ## Creating a repository
@@ -677,7 +677,7 @@ button at the top right of the page. Following a brief load screen, GitHub will
 redirect you to your new, forked repo.
 
 #### Having a local repository of what you forked
-You want to have a version of this repository on your computer to work with, that is called your `local repository`. The repository in your Github account is usually called `origin`, and the one your forked from is called `upstream`. The relationship and commands between the different repositories are shown in below figure.
+You want to have a version of this repository on your computer to work with, that is called your `local repository`. The repository in your Github account is usually called `origin`, and the one your forked from is called `upstream`. The relationship and commands between the different repositories are shown in below figure (note that similar commands are used on the side of the owner of the main repo (the upstream) which we don't show in this Figure)
 ![Github remotes and local](github.png){ width=50% }
 
 Head to your fork on GitHub, and click on the green 'Clone or
@@ -749,9 +749,9 @@ a good resource is the [software carpentry lesson](http://swcarpentry.github.io/
 
 
 # Supplementary material
-It's a best practice to Python’s `argparse` library to take arguments and parameters into our program. we will modify our code slightly to use this library, but you can learn how to even make the code more efficient by reading [Python's official documentation](https://docs.python.org/3/library/argparse.html)
+It's a good practice to use Python’s `argparse` library to take arguments and parameters into our program. We will modify our code slightly to use this library, but you can learn how to even make the code more efficient by reading [Python's official documentation](https://docs.python.org/3/library/argparse.html)
 
-You can notice that the library takes care of reading from a pipeline and we can comment those section out of our code.
+Notice that the library takes care of reading the arguments passed in from a pipeline command-line and we can comment those section out of our code.
 
 ```Python
 import sys
