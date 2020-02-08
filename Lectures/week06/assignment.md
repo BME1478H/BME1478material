@@ -20,7 +20,7 @@ def main():
     rate_params = **c)....**
 
 
-    range_rate = np.arange(float(rate_params[0]),float(rate_params[1]),float(rate_params[2])) #here we made a slight change: since the parameters that are read by sys library are strings, we have to convert them to floats.
+    range_rate = np.arange(float(rate_params[0]),float(rate_params[1]),float(rate_params[2])) #here we made a slight change: since the parameters that are read by sys library are strings, we have to convert them to floats. If we were using argpars library we could define type = 'float'
     experiment_data = **d)...**
 
     # define a function that calcualates mean squared error
@@ -47,6 +47,10 @@ def main():
 save and close.
 
 2) Try your code in command line with a few parameter ranges and report what is the rate you predict for the dataset shared with you.
+for example:
+```
+python model_growth.py bacteria.csv 0 2 0.1
+```
 
 3) Fork the class repository, the bacteria.csv data and the model_growth.py files are copied there. change the python script as you did in the first section, and do a pull request to the class repo. The steps you should take are as below if you were not in the tutorial and haven't forked the class repo, if you already have, jump in to step 4:
   1- fork on GitHub
