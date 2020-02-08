@@ -20,7 +20,7 @@ and cd to the code directory.
 Using Atom (or any text editor of your choice), save the following commands in the a text file called `sys_version.py`:
 
 ```Bash
- `sys_version.py`
+atom  `sys_version.py`
 ```
 when open, copy these Python commands in the text file and hit save.
 
