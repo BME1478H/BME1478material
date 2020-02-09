@@ -1,7 +1,7 @@
 # Assignment
 
-## Part 1
-Turning the code for predicting population growth in bacteria into a command line script:
+## Part 1 (3.5 marks)
+Turn the code for predicting population growth in bacteria into a command line script:
 
 Our collaborator sends us a csv file named `bacteria.csv`, they have started with a colony of 300 bacteria and have counted the population 100 times in the course of 10 days. We hypothesize that the daily growth has an exponential model and we want to find the rate that bests fit an exponential model to the data. We want a script that takes the csv file, and the range of rates that we desire and returns the rate with the best fit. Something like below in the command line:
 
@@ -9,23 +9,24 @@ Our collaborator sends us a csv file named `bacteria.csv`, they have started wit
 python model_growth.py bacteria.csv 0.1 1 0.1
 ```
 
+where 1st argument (after script name) is the file containing our data (bacteria.csv), and the next 3 arguments (0.1, 1, and 0.1) indicate the start, stop, and step sized needed, respectively, to create our range of rates. 
+
 Create a python script called `model_growth.py` that uses the following example solution code to Assignment 3 and turn it into a command line script.
-The lines for you to fill are named as a) to d):
+The places you need to fill in code are indicated via `**(a-e, marks allocated)**`:
 
 ```Python
-**a) ....**
-import numpy as np
+# import libraries used in this script
+**(a, 1 mark)  ....**
 
 def main():
+    # read in the data from the .csv passed to our script
+    filename = **(b, 0.5 marks)...**
+    experiment_data = **(d, 0.5 marks)...**
 
-    filename = **b)...**
-    rate_params = **c)....**
-
-
+    # store the command-line arguments that represent the start, stop, and step size in the variable rate_params
+    rate_params = **(c, 0.5 marks)....**
+    # note: since the parameters that are read by sys.argv are strings, we have to convert them to floats using float(a_string)
     range_rate = np.arange(float(rate_params[0]), float(rate_params[1]), float(rate_params[2]))
-    # note that here we made a slight change:
-    # since the parameters that are read by sys library are strings, we have to convert them to floats. If we were using argpars library we could define type = 'float'
-    experiment_data = **d)...**
 
     # define a function that calculates mean squared error
     def squared_error(prediction, data):
@@ -44,9 +45,11 @@ def main():
 
     best_fit = range_rate[np.argmin(mse)]
     print('We predict the rate of growth of this bacterial population to be', best_fit)
-# write the code that makes sure the main() function is called when we run the script from command line
-**e)...**
-**f)...**
+    
+    
+# write the code necessary to make sure the main() function is called when we run the script from command line
+**(e, 1 mark)...**
+
 ```
 save and close.
 Try for yourself to run the script in the command line with a few parameter ranges for the dataset shared with you. for example:
@@ -55,8 +58,8 @@ python model_growth.py bacteria.csv 0 2 0.1
 ```
 We will share the best fit rate later and you can check if you got close to the right answer (no marks is dedicated to this part).
 
-## Part 2
-Fork the class repository, change the script `model_growth.py` as you did in the first section of this assignment, and open a pull request to the class repo. Step by Step instructions for this are provided below. **a**, **b**, **c**, **d** stand for commands or actions that have marks.
+## Part 2 (2.5 marks)
+Fork the class repository, change the script `model_growth.py` as you did in the first section of this assignment, and open a pull request to the [class repo](https://github.com/BME1478H/Winter2020class). Step by Step instructions for this are provided below. **a**, **b**, **c**, **d** stand for commands or actions that have marks.
 
 If you already have forked the class repo you can jump to step 4.
 
@@ -71,24 +74,35 @@ If you already have forked the class repo you can jump to step 4.
   6. run `git status` and confirm that `model_growth.py` shows up as a modified file (if you changed the filename it might show up as an untracked file instead).
   7. do the steps necessary to track your change (i.e. add the changed file to the staging area, and commit with an explanatory commit message). List the two commands you needed to run:
 
-     **a**
+     **(a, 0.5 marks)**
 
-     **b**
+     **(b, 0.5 marks)**
 
   8. push your updated local repo to the remote named "origin" (which is the nickname for your fork). Write the command you needed to run:
 
-     **c**
+     **(c, 0.5 marks)**
 
   9. go to your fork on GitHub, confirm that your repo is now ahead of the class repo (something like the figure below), and open a pull request.
 
-     **d**
+     **(d, 1 mark)**
 
   There will be a mark for seeing your pull request. although we won't merge the pull requests.
 
 ![Figure showing the status before pull request](PR.png)
 
 ## Deliverables:
-- Part 1: `model_growth.py` filled in.
-- Part 2: Write commands you needed to run for **a**, **b**, **c** at the end of the `model_growth.py` script as comments (reminder: any line with a # sign is a comment in Python) and TAs will check the class repo for receiving your pull request (for **d**).
+- Part 1: Fill in `model_growth.py` and make a copy (somewhere else, not in your git repository folder) renamed as `first_last_assignment5.py` (replacing first and last with your name).
+- Part 2: Write the git commands needed to complete **a-c** at the bottom of your `first_last_assignment5.py`, e.g. 
+```
+# all lines should start with #
+# question a
+# commands go here
+# question b
+# commands go here
+# question c
+# commands goes here
 
-Submit `model_growth.py` to Quercus.
+```
+TAs will check the class repo for receiving your pull request (for **d**).
+
+Submit `first_last_assignment5.py` to Quercus Assignment #5
