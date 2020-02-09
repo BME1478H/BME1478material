@@ -25,6 +25,7 @@ The Jupyter Notebook and other interactive tools are great for prototyping code 
 
 Note before we start: positioning our terminal: open your terminal in the Project directory that we defined in the previous lesson
 Project
+
 |__code
 |__data
 and cd to the code directory.
