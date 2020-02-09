@@ -426,7 +426,8 @@ There are two main commands besides initiating the repo:
 - `git init`: to create a repository
 - `git add`: to mark the changes that we want to keep track of
 - `git commit`: to actually create a version of the state of change
-as seen in below figure ![git staging area](git_staging_area.png)
+as seen in below figure 
+![git staging area](git_staging_area.png)
 
 
 ## Creating a repository
