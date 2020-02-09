@@ -27,7 +27,7 @@ Note before we start: positioning our terminal: open your terminal in the Projec
 Project
 
 |__code
-|
+
 |__data
 and cd to the code directory.
 
