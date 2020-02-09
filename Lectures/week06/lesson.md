@@ -3,6 +3,19 @@ title: 'Command line Python and Git version control'
 ---
 ## Lesson objectives:
 
+Part 1:
+  - Understand the difference between running code in Jupyter Notebook command line
+  - Use the values of command-line arguments in a program
+  - Handle flags and files separately in a command-line program.
+  - Read data from standard input in a program so that it can be used in a pipeline.
+
+Part 2
+  - Learn basics of version control using Git and GitHub
+  - Create a repository
+  - Track changes
+  - Set up remotes
+  - Sync repositories
+
 # Command line python
 The Jupyter Notebook and other interactive tools are great for prototyping code and exploring data, but we ultimately want to use our program in a pipeline to process many data files, run it with many different parameters, or combine it with other programs in the data analysis pipeline. The easiest way to do this effectively is often to turn our code into a standalone program that can be run in a shell terminal just like other command-line tools (Taschuk and Wilson, 2017).
 
@@ -801,3 +814,7 @@ or
 ```Bash
 $ python ../code/stats.py --stat 'max' small-01.csv
 ```
+
+### Acknowledgments:
+- http://swcarpentry.github.io/python-novice-inflammation/12-cmdline/index.html
+- http://swcarpentry.github.io/git-novice/
