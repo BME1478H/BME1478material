@@ -105,4 +105,4 @@ If you already have forked the class repo you can jump to step 4.
 ```
 TAs will check the class repo for receiving your pull request (for **d**).
 
-Submit `first_last_assignment5.py` to Quercus Assignment #5
+**Submit `first_last_assignment5.py` to Quercus Assignment #5**
