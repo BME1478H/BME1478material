@@ -66,17 +66,17 @@ Note: the steps start from forking the class repo, if you attended the tutorial 
   5. run `git status` and confirm that `model_growth.py` shows up as a modified file (if you changed the filename it might show up as an untracked file instead).
   6. do the steps necessary to track your change (i.e. add the changed file to the staging area, and commit with an explanatory commit message).
 
-  **a**
+    **a**
 
-  **b**
+    **b**
 
   7. push your updated local repo to the remote named "origin" (which is the nickname for your fork)
 
-  **c**
+    **c**
 
   8. go to your fork on GitHub, confirm that your repo is now ahead of the class repo (something like the figure below), and open a pull request
 
-  **d**
+    **d**
 
   There will be a mark for seeing your pull request. although we won't merge the pull requests.
 
