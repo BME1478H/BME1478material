@@ -8,6 +8,7 @@ Part 1:
   - Use the values of command-line arguments in a program
   - Handle flags and files separately in a command-line program.
   - Read data from standard input in a program so that it can be used in a pipeline.
+
 Part 2
   - Learn basics of version control using Git and GitHub
   - Create a repository
