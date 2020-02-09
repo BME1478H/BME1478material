@@ -426,7 +426,7 @@ There are two main commands:
 - `git init`: to create a repository
 - `git add`: to mark the changes that we want to keep track of
 - `git commit`: to actually create a version of the state of change
-as seen in ![Figure](git_staging_area.png)
+as seen in below figure ![](git_staging_area.png)
 
 
 ## Creating a repository
@@ -691,7 +691,7 @@ redirect you to your new, forked repo.
 
 #### Having a local repository of what you forked
 You want to have a version of this repository on your computer to work with, that is called your `local repository`. The repository in your Github account is usually called `origin`, and the one your forked from is called `upstream`. The relationship and commands between the different repositories are shown in below figure (note that similar commands are used on the side of the owner of the main repo (the upstream) which we don't show in this Figure)
-![Github remotes and local](github.png){ width=50% }
+![Github remotes and local](github.png)
 
 Head to your fork on GitHub, and click on the green 'Clone or
 download' button on the right side of the page. This yields a link
