@@ -813,3 +813,7 @@ or
 ```Bash
 $ python ../code/stats.py --stat 'max' small-01.csv
 ```
+
+### Acknowledgments:
+- http://swcarpentry.github.io/python-novice-inflammation/12-cmdline/index.html
+- http://swcarpentry.github.io/git-novice/
