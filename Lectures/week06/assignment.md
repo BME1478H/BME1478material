@@ -1,6 +1,7 @@
 # Assignment
 
-1) Turning the code for predicting population growth in bacteria into a command line script:
+## Part 1
+Turning the code for predicting population growth in bacteria into a command line script:
 
 Our collaborator sends us a csv file named `bacteria.csv`, they have started with a colony of 300 bacteria and have counted the population 100 times in the course of 10 days. We hypothesize that the daily growth has an exponential model and we want to find the rate that bests fit an exponential model to the data. We want a script that takes the csv file, and the range of rates that we desire and returns the rate with the best fit. Something like below in the command line:
 
@@ -54,7 +55,8 @@ python model_growth.py bacteria.csv 0 2 0.1
 ```
 We will share the best fit rate later and you can check if you got close to the right answer (no marks is dedicated to this part).
 
-2) Fork the class repository, the bacteria.csv data and the model_growth.py files are copied there. change the python script as you did in the first section, and do a pull request to the class repo. The steps you should take are as below (a, b, c, d are blank for the one git command that you should run).
+## Part 2
+Fork the class repository, the bacteria.csv data and the model_growth.py files are copied there. change the python script as you did in the first section, and do a pull request to the class repo. The steps you should take are as below (a, b, c, d are blank for the one git command that you should run).
 Note: the steps start from forking the class repo, if you attended the tutorial and have already forked and cloned the repo, jump to step 4:
   1. fork on GitHub
   2. copy the link for cloning
