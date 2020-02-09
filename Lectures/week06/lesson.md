@@ -422,11 +422,11 @@ This is very helpful for not cluttering your workspace with redundant copies of 
 
 A version control system is automatic in the sense that when it's called, it automatically keeps track of changes (what) and metadata of the changes (who and when), which all together make up a "repository". But, it's you who have to operate it. So you have to create a repository and you have to decide which changes you want to keep a history of. For this, you have to run certain Git commands.
 
-There are two main commands:
+There are two main commands besides initiating the repo:
 - `git init`: to create a repository
 - `git add`: to mark the changes that we want to keep track of
 - `git commit`: to actually create a version of the state of change
-as seen in below figure ![](git_staging_area.png)
+as seen in below figure ![git staging area](git_staging_area.png)
 
 
 ## Creating a repository
