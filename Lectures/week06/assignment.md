@@ -86,9 +86,9 @@ If you already have forked the class repo you can jump to step 4.
 
      **(d, 1 mark)**
 
-  There will be a mark for seeing your pull request. although we won't merge the pull requests.
+  There will be a mark for seeing your pull request. although we won't merge the pull requests. Here's what it looks like:
 
-![Figure showing the status before pull request](PR.png)
+![Figure showing the status before pull request](https://github.com/BME1478H/Winter2020class/blob/master/Assignment/PR.PNG)
 
 ## Deliverables:
 - Part 1: Fill in `model_growth.py` and make a copy (somewhere else, not in your git repository folder) renamed as `first_last_assignment5.py` (replacing first and last with your name).
