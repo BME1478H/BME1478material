@@ -54,7 +54,7 @@ python model_growth.py bacteria.csv 0 2 0.1
 ```
 We will share the best fit rate later and you can check if you got close to the right answer (no marks is dedicated to this part).
 
-2 ) Fork the class repository, the bacteria.csv data and the model_growth.py files are copied there. change the python script as you did in the first section, and do a pull request to the class repo. The steps you should take are as below (a, b, c, d are blank for the one git command that you should run).
+2) Fork the class repository, the bacteria.csv data and the model_growth.py files are copied there. change the python script as you did in the first section, and do a pull request to the class repo. The steps you should take are as below (a, b, c, d are blank for the one git command that you should run).
 Note: the steps start from forking the class repo, if you attended the tutorial and have already forked and cloned the repo, jump to step 4:
   1. fork on GitHub
   2. copy the link for cloning
@@ -75,7 +75,7 @@ Note: the steps start from forking the class repo, if you attended the tutorial 
   8. go to your fork on GitHub, confirm that your repo is now ahead of the class repo (something like the figure below), and open a pull request
 
   **d**
-  
+
   There will be a mark for seeing your pull request. although we won't merge the pull requests.
 
 ![Figure showing the status before pull request](PR.png)
