@@ -67,12 +67,15 @@ Note: the steps start from forking the class repo, if you attended the tutorial 
   **a**
 
   **b**
+
   7. push your updated local repo to the remote named "origin" (which is the nickname for your fork)
 
   **c**
+
   8. go to your fork on GitHub, confirm that your repo is now ahead of the class repo (something like the figure below), and open a pull request
 
   **d**
+  
   There will be a mark for seeing your pull request. although we won't merge the pull requests.
 
 ![Figure showing the status before pull request](PR.png)
