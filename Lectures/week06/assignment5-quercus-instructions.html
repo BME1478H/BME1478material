@@ -1,0 +1,84 @@
+<h1 id="assignment">Assignment</h1>
+<h2 id="part-1-3.5-marks">Part 1 (3.5 marks)</h2>
+<p>Turn the code for predicting population growth in bacteria into a command line script:</p>
+<p>Our collaborator sends us a csv file named <code>bacteria.csv</code>, they have started with a colony of 300 bacteria and have counted the population 100 times in the course of 10 days. We hypothesize that the daily growth has an exponential model and we want to find the rate that bests fit an exponential model to the data. We want a script that takes the csv file, and the range of rates that we desire and returns the rate with the best fit. Something like below in the command line:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">python</span> model_growth.py bacteria.csv 0.1 1 0.1</a></code></pre></div>
+<p>where 1st argument (after script name) is the file containing our data (bacteria.csv), and the next 3 arguments (0.1, 1, and 0.1) indicate the start, stop, and step sized needed, respectively, to create our range of rates.</p>
+<p>Create a python script called <code>model_growth.py</code> that uses the following example solution code to Assignment 3 and turn it into a command line script. The places you need to fill in code are indicated via <code>**(a-e, marks allocated)**</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># import libraries used in this script</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="op">**</span>(a, <span class="dv">1</span> mark)  ....<span class="op">**</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">def</span> main():</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="co"># read in the data from the .csv passed to our script</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    filename <span class="op">=</span> <span class="op">**</span>(b, <span class="fl">0.5</span> marks)...<span class="op">**</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    experiment_data <span class="op">=</span> <span class="op">**</span>(d, <span class="fl">0.5</span> marks)...<span class="op">**</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="co"># store the command-line arguments that represent the start, stop, and step size in the variable rate_params</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    rate_params <span class="op">=</span> <span class="op">**</span>(c, <span class="fl">0.5</span> marks)....<span class="op">**</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="co"># note: since the parameters that are read by sys.argv are strings, we have to convert them to floats using float(a_string)</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    range_rate <span class="op">=</span> np.arange(<span class="bu">float</span>(rate_params[<span class="dv">0</span>]), <span class="bu">float</span>(rate_params[<span class="dv">1</span>]), <span class="bu">float</span>(rate_params[<span class="dv">2</span>]))</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="co"># define a function that calculates mean squared error</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">    <span class="kw">def</span> squared_error(prediction, data):</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">        residual <span class="op">=</span> prediction <span class="op">-</span> data</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">        mse <span class="op">=</span> (residual<span class="op">**</span><span class="dv">2</span>).mean()          </a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">        <span class="cf">return</span> mse</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="co"># try the parameters and choose the one with the smallest squared error</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">    mse <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">    <span class="co"># note two modifications below: we are taking the N0 and the time vector from data</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">    N0 <span class="op">=</span> experiment_data[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">    t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="bu">len</span>(experiment_data))</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">    <span class="cf">for</span> r <span class="kw">in</span> range_rate:</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">        prediction <span class="op">=</span> N0<span class="op">*</span>np.exp(r<span class="op">*</span>t)</a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">        mse.append(squared_error(prediction, experiment_data))</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">    best_fit <span class="op">=</span> range_rate[np.argmin(mse)]</a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">    <span class="bu">print</span>(<span class="st">&#39;We predict the rate of growth of this bacterial population to be&#39;</span>, best_fit)</a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">    </a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">    </a>
+<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="co"># write the code necessary to make sure the main() function is called when we run the script from command line</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="op">**</span>(e, <span class="dv">1</span> mark)...<span class="op">**</span></a></code></pre></div>
+<p>save and close. Try for yourself to run the script in the command line with a few parameter ranges for the dataset shared with you. for example:</p>
+<pre><code>python model_growth.py bacteria.csv 0 2 0.1</code></pre>
+<p>We will share the best fit rate later and you can check if you got close to the right answer (no marks is dedicated to this part).</p>
+<h2 id="part-2-2.5-marks">Part 2 (2.5 marks)</h2>
+<p>Fork the class repository, change the script <code>model_growth.py</code> as you did in the first section of this assignment, and open a pull request to the <a href="https://github.com/BME1478H/Winter2020class">class repo</a>. Step by Step instructions for this are provided below. <strong>a</strong>, <strong>b</strong>, <strong>c</strong>, <strong>d</strong> stand for commands or actions that have marks.</p>
+<p>If you already have forked the class repo you can jump to step 4.</p>
+<ol type="1">
+<li>fork on GitHub</li>
+<li>copy the link for cloning</li>
+<li>open a terminal in your desired directory (e.g. desktop), and run <code>git clone &lt;URL&gt;</code> (replace <URL> with the link you copied from your fork on Github)</li>
+<li>change to the cloned directory in terminal.</li>
+<li>substitute the <code>model_growth.py</code> you made for the one in the Assignment directory (you can either replace the file or copy over the content).</li>
+</ol>
+<p>Note: that it is often preferred to create a separate branch for new features rather than making changes directly to your master branch, but we’re skipping that step in this assignment.</p>
+<ol start="6" type="1">
+<li>run <code>git status</code> and confirm that <code>model_growth.py</code> shows up as a modified file (if you changed the filename it might show up as an untracked file instead).</li>
+<li><p>do the steps necessary to track your change (i.e. add the changed file to the staging area, and commit with an explanatory commit message). List the two commands you needed to run:</p>
+<p><strong>(a, 0.5 marks)</strong></p>
+<p><strong>(b, 0.5 marks)</strong></p></li>
+<li><p>push your updated local repo to the remote named “origin” (which is the nickname for your fork). Write the command you needed to run:</p>
+<p><strong>(c, 0.5 marks)</strong></p></li>
+<li><p>go to your fork on GitHub, confirm that your repo is now ahead of the class repo (something like the figure below), and open a pull request.</p>
+<p><strong>(d, 1 mark)</strong></p></li>
+</ol>
+<p>There will be a mark for seeing your pull request. although we won’t merge the pull requests. Here’s what it looks like:</p>
+<figure>
+<img src="https://github.com/BME1478H/Winter2020class/blob/master/Assignment/PR.PNG" alt="Figure showing the status before pull request" /><figcaption>Figure showing the status before pull request</figcaption>
+</figure>
+<h2 id="deliverables">Deliverables:</h2>
+<ul>
+<li>Part 1: Fill in <code>model_growth.py</code> and make a copy (somewhere else, not in your git repository folder) renamed as <code>first_last_assignment5.py</code> (replacing first and last with your name).</li>
+<li>Part 2: Write the git commands needed to complete <strong>a-c</strong> at the bottom of your <code>first_last_assignment5.py</code>, e.g.</li>
+</ul>
+<pre><code># all lines should start with #
+# question a
+# commands go here
+# question b
+# commands go here
+# question c
+# commands goes here
+</code></pre>
+<p>TAs will check the class repo for receiving your pull request (for <strong>d</strong>).</p>
+<p><strong>Submit <code>first_last_assignment5.py</code> to Quercus Assignment #5</strong></p>
