@@ -59,7 +59,7 @@ python model_growth.py bacteria.csv 0 2 0.1
 We will share the best fit rate later and you can check if you got close to the right answer (no marks is dedicated to this part).
 
 ## Part 2 (2.5 marks)
-Fork the class repository, change the script `model_growth.py` as you did in the first section of this assignment, and open a pull request to the [class repo](https://github.com/BME1478H/Winter2020class). Step by Step instructions for this are provided below. **a**, **b**, **c**, **d** stand for commands or actions that have marks.
+Fork the class repository, add a line to the `dummy_story.txt` file, and open a pull request to the [class repo](https://github.com/BME1478H/Winter2020class). Step by Step instructions for this are provided below. **a**, **b**, **c**, **d** stand for commands or actions that have marks.
 
 If you already have forked the class repo you can jump to step 4.
 
