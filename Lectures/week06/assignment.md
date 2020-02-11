@@ -9,7 +9,7 @@ Our collaborator sends us a csv file named `bacteria.csv`, they have started wit
 python model_growth.py bacteria.csv 0.1 1 0.1
 ```
 
-where 1st argument (after script name) is the file containing our data (bacteria.csv), and the next 3 arguments (0.1, 1, and 0.1) indicate the start, stop, and step sized needed, respectively, to create our range of rates. 
+where 1st argument (after script name) is the file containing our data (bacteria.csv), and the next 3 arguments (0.1, 1, and 0.1) indicate the start, stop, and step sized needed, respectively, to create our range of rates.
 
 Create a python script called `model_growth.py` that uses the following example solution code to Assignment 3 and turn it into a command line script.
 The places you need to fill in code are indicated via `**(a-e, marks allocated)**`:
@@ -45,8 +45,8 @@ def main():
 
     best_fit = range_rate[np.argmin(mse)]
     print('We predict the rate of growth of this bacterial population to be', best_fit)
-    
-    
+
+
 # write the code necessary to make sure the main() function is called when we run the script from command line
 **(e, 1 mark)...**
 
@@ -67,11 +67,11 @@ If you already have forked the class repo you can jump to step 4.
   2. copy the link for cloning
   3. open a terminal in your desired directory (e.g. desktop), and run `git clone <URL>` (replace <URL> with the link you copied from your fork on Github)
   4. change to the cloned directory in terminal.
-  5. substitute the `model_growth.py` you made for the one in the Assignment directory (you can either replace the file or copy over the content).
+  5. Add a line, whatever sentence you like, to the `dummy_story.txt` file in the Assignment directory. Save and close.
+  6. run `git status` and confirm that `dummy_story.txt` shows up as a modified file (if you changed the filename it might show up as an untracked file instead).
 
   Note: that it is often preferred to create a separate branch for new features rather than making changes directly to your master branch, but we're skipping that step in this assignment.
 
-  6. run `git status` and confirm that `model_growth.py` shows up as a modified file (if you changed the filename it might show up as an untracked file instead).
   7. do the steps necessary to track your change (i.e. add the changed file to the staging area, and commit with an explanatory commit message). List the two commands you needed to run:
 
      **(a, 0.5 marks)**
@@ -92,7 +92,7 @@ If you already have forked the class repo you can jump to step 4.
 
 ## Deliverables:
 - Part 1: Fill in `model_growth.py` and make a copy (somewhere else, not in your git repository folder) renamed as `first_last_assignment5.py` (replacing first and last with your name).
-- Part 2: Write the git commands needed to complete **a-c** at the bottom of your `first_last_assignment5.py`, e.g. 
+- Part 2: Write the git commands needed to complete **a-c** at the bottom of your `first_last_assignment5.py`, e.g.
 ```
 # all lines should start with #
 # question a
