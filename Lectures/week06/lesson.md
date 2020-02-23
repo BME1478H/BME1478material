@@ -414,6 +414,37 @@ $ python ../code/stats_06.py --max < small-01.csv
 Write a command-line program that does addition and subtraction:
 $ python arith.py add 1 2
 
+### Answer:
+import sys
+
+def main():
+    assert len(sys.argv) == 4, 'Need exactly 3 arguments'
+
+    operator = sys.argv[1]
+    assert operator in ['add', 'subtract', 'multiply', 'divide'], \
+        'Operator is not one of add, subtract, multiply, or divide: bailing out'
+    try:
+        operand1, operand2 = float(sys.argv[2]), float(sys.argv[3])
+    except ValueError:
+        print('cannot convert input to a number: bailing out')
+        return
+
+    do_arithmetic(operand1, operator, operand2)
+
+def do_arithmetic(operand1, operator, operand2):
+
+    if operator == 'add':
+        value = operand1 + operand2
+    elif operator == 'subtract':
+        value = operand1 - operand2
+    elif operator == 'multiply':
+        value = operand1 * operand2
+    elif operator == 'divide':
+        value = operand1 / operand2
+    print(value)
+
+main()
+
 
 So far we have created several versions of our script called stats_01.py, stats_02.py, and stats_03.py, etc. We wouldn’t do this in real life: instead, we would have one file called stats.py that we committed to version control every time we got an enhancement working.
 
@@ -428,8 +459,8 @@ There are two main commands besides initiating the repo:
 - `git init`: to create a repository
 - `git add`: to mark the changes that we want to keep track of
 - `git commit`: to actually create a version of the state of change
-as seen in below figure 
-![git staging area](git_staging_area.svg)
+as seen in below figure
+![git staging area](git_staging_area.png)
 
 
 ## Creating a repository
@@ -665,8 +696,19 @@ You can do this as a challenge.
 > ## Challenge
 1) add a line to one of the stats scripts you haven't tracked. it can be a simple comment.
 run git status and see what happens.
-2) copy the final version of the code in stats.py, and commit. remove extra files and run the status.
-3) add a comment to stats.py and check the status, then add and commit to familiarize yourself with the way it looks when everything is up to date and there are no untracked files.
+Answer:
+git status
+
+> 2) copy the final version of the code in stats.py, and commit. remove extra files and run the status.
+Answer:
+git status
+
+> 3) add a comment to stats.py and check the status, then add and commit to familiarize yourself with the way it looks when everything is up to date and there are no untracked files.
+Answer:
+git status
+add stats.py
+commit -m "finalize stats code"
+
 
 ## Github
 Although command line Git is very useful, GitHub allows for easy use of Git for
