@@ -4,20 +4,21 @@ Worth 28% of final grade.
 
 ## Timeline
 
-Part 1: Propose a hypothesis to test which is relevant to the assigned group topic (3 marks)
-- Due: **March 25th, 11:59pm**
-- Write 3-4 sentences explaining:
+Analysis Proposal: Propose a hypothesis to test which is relevant to the assigned group topic (3 marks)
+- Due: **Friday March 27th, 11:59pm**
+- Each group will write 3-4 sentences explaining:
     - Which hypothesis you aim to test in your analysis? (1 mark)
     - What statistical test(s) you could use (you do not have to use these in the your final assignment if you end up finding more appropriate tests) (1 mark)
     - what kind of graph/plot you could use to visualize the results (1 mark)
 
-Part 2: Final jupyter notebook/pdf completed and submitted to Quercus. Directory uploaded to Github (25 marks)
+Final Submission: A jupyter notebook (and exported pdf version of notebook) completed and submitted to Quercus. Directory uploaded to Github (25 marks)
 - Due: **Wednesday April 8th, 11:59pm**
 
 ## Instructions: 
 
 1. Download/set-up folder structure for assignment which has the data you should use. 
-2. Based on your group's assigned question, explore the data for possible relationships between indicators relevant to your group's topic. 
+2. Based on your group's assigned topic, explore the data for possible relationships between indicators relevant to your group's topic. 
+   1. Complete Part 1
 3. End product: A jupyter notebook (and an exported PDF) that makes use of both Markdown and Code cells to explain the code, visualizations and data/statisical analyses you are performing on your group's assigned topic. 
     1. Come up with a short title describing the results of your analysis on the group topic 
     2. "Introduction" section (150 words max) briefly stating your hypothesis and what you will be exploring in your notebook.
@@ -35,11 +36,11 @@ Part 2: Final jupyter notebook/pdf completed and submitted to Quercus. Directory
 5. Projects are expected to be reproducible, i.e. the TA's should be able to load your jupyter notebooks, and get the same results (estimated, if random numbers are used for certain methods) and plots. We should be able to execute your notebooks from start to finish. 
 6. Each student will include a self-assessment of their contribution to the project, with a rating out of 3 and 2-3 sentences submitted in a .txt file indicating how they contributed to the team effort. This will be peer-reviewed by fellow group members and a final score averaged. 
 
-## Grading Scheme (25)
+## Grading Scheme for Final Submission (25)
 - Style/Formatting (6 marks)
-    - i.e. title, good naming of variables/functions, code formatting, few errors, commenting, spelling/grammar in the markdown cell portions is correct
+    - i.e. title, good naming of variables/functions, few typos and coding errors, commenting, spelling/grammar in the markdown cell portions is correct
 - Content (12 marks)
-    - notebook has a good logical flow, code works, plots are valid and relevant, clear logical conclusions written, rationale for each plot and interpretation of statistical tests are sound
+    - notebook has a good logical flow, data exploration and visualization are valid and relevant, rationale for each plot and interpretation of statistical tests are sound, clear logical conclusions written
 - GitHub repository uploaded online (2 marks)
     - repo is set up as per the original template directory structure/instructions
 - Individual (5 marks) 
