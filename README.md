@@ -20,13 +20,13 @@ Week 7. Using Python instead of Excel
 
 Week 8. Data visualisation
 
-Week 9. Data visualisation continued
+Week 9. Visualization for exploratory data analysis
 
-Week 10. Statistics
+Week 10. Statistics: data preprocessing (tidy data, reshaping data, cleaning data); Hypothesis testing (ttetst: one sample, two sample, paired, ANOVA)
 
-Week 11. Introduction to machine learning
+Week 11. Statistics: Tests of Association (linear regression, multivariate linear regression, generalized linear models)
 
-Week 12. Machine learning continued
+Week 12. Machine learning (Normalization, Dimensionality reduction, PCA, UMAP, Supervised Learning:Decision trees, Evaluating model, Unsupervised Learning: K-means clustering, Quality metrics)
 
 
 ## Assessment
